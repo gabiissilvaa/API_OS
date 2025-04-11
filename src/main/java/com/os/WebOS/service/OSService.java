@@ -14,10 +14,10 @@ public class OSService {
     private OSRepository osRepository;
 
     public List<OSDto> listarPorCliente(Long clienteId) {
-        return osRepository.findByClienteId(clienteId)
+        return osRepository.findByIdcliente(clienteId)
                 .stream()
                 .map(os -> new OSDto(
-                        os.getIdOS(),
+                        os.getId(),
                         os.getModelo(),
                         os.getProblemaRelatado(),
                         os.getTecnico(),

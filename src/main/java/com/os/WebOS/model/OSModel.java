@@ -3,7 +3,6 @@ package com.os.WebOS.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.Date;
 
 @Getter
@@ -13,7 +12,10 @@ import java.util.Date;
 public class OSModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idOS;
+    private Long id;
+
+    @Column(name = "idcliente", nullable = false)
+    private Long idcliente;
 
     @Column(name = "modelo", nullable = false)
     private String modelo;
@@ -29,8 +31,4 @@ public class OSModel {
 
     @Column(name = "DATA_ULTIMA_SITUACAO")
     private Date dataUltSituacao;
-
-    @ManyToOne
-    @JoinColumn(name = "id_os")
-    private ClienteModel cliente;
 }

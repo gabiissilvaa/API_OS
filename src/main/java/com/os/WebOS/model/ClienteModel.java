@@ -3,9 +3,7 @@ package com.os.WebOS.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -16,8 +14,11 @@ public class ClienteModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome", nullable = false)
+    @Column(name = "nomecliente", nullable = false)
     private String nome;
+
+    @Column(name = "documentocliente", nullable = false)
+    private String cpfCnpj;
 
     @Column(name = "equipamento", nullable = false)
     private String equipamento;
@@ -30,7 +31,4 @@ public class ClienteModel {
 
     @Column(name = "dtEntrada", nullable = false)
     private Date dataEntrada;
-
-    @OneToMany(mappedBy = "cliente")
-    private List<OSModel> ordensServicos;
 }

@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface OSRepository extends JpaRepository<OSModel, Long> {
-    List<OSModel> findByClienteId(Long clienteId);
+    List<OSModel> findByIdcliente(Long idcliente);
 }
