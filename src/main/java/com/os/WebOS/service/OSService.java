@@ -17,12 +17,12 @@ public class OSService {
         return osRepository.findByIdcliente(clienteId)
                 .stream()
                 .map(os -> new OSDto(
-                        os.getId(),
+                        os.getIdcliente(),
                         os.getModelo(),
                         os.getProblemaRelatado(),
                         os.getTecnico(),
                         os.getGarantia(),
                         os.getDataUltSituacao()))
-                .collect(Collectors.toList());
+                .toList();
     }
 }

@@ -38,9 +38,6 @@ public class AuthService {
             throw new IllegalArgumentException("CPF/CNPJ inválido");
         }
 
-        ClienteModel cliente = clienteRepository.findByCpfCnpj(request.getCpfCnpj())
-                .orElseThrow(() -> new UsuarioNaoEncontradoException("Credenciais inválidas"));
-
         SenhaModel dadosSenha = senhaRepository.findByCpfCnpj(request.getCpfCnpj())
                 .orElseThrow(() -> new UsuarioNaoEncontradoException("Credenciais inválidas"));
 
@@ -48,7 +45,13 @@ public class AuthService {
             throw new CredenciaisInvalidasException("Senha incorreta");
         }
 
-        List<OSDto> ordensServico = osService.listarPorCliente(cliente.getId());
+        ClienteModel cliente = clienteRepository.findByCpfCnpj(request.getCpfCnpj())
+                .orElseThrow(() -> {
+                    System.out.println("Cliente não encontrado com CPF/CNPJ: " + request.getCpfCnpj());
+                    return new UsuarioNaoEncontradoException("Nenhuma OS encontrada");
+                });
+
+        List<OSDto> ordensServico = osService.listarPorCliente(cliente.getIdcliente());
 
         return new LoginResponse(
                 cliente.getNome(),

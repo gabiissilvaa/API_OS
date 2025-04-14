@@ -3,20 +3,24 @@ package com.os.WebOS.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Immutable;
+
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
+@Immutable
 @Table(name = "view_os_cliente_web")
 public class ClienteModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "nomecliente", nullable = false)
     private String nome;
 
+    @Column(name = "idcliente", nullable = false)
+    private Long idcliente;
+
+    @Id
     @Column(name = "documentocliente", nullable = false)
     private String cpfCnpj;
 
@@ -31,4 +35,7 @@ public class ClienteModel {
 
     @Column(name = "dtEntrada", nullable = false)
     private Date dataEntrada;
+
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+    private List<OSModel> ordensServico;
 }

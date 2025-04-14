@@ -3,10 +3,12 @@ package com.os.WebOS.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Immutable;
 
 @Entity
 @Getter
 @Setter
+@Immutable
 @Table(name = "view_cliente_usuario_os_web")
 public class SenhaModel {
     @Id

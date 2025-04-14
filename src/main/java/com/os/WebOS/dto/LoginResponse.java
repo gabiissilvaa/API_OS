@@ -1,6 +1,5 @@
 package com.os.WebOS.dto;
 
-import com.os.WebOS.model.OSModel;
 import lombok.Getter;
 import lombok.Setter;
 
