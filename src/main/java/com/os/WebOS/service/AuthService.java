@@ -12,7 +12,6 @@ import com.os.WebOS.repository.OSRepository;
 import com.os.WebOS.repository.SenhaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -54,9 +53,9 @@ public class AuthService {
         List<OSDto> ordensServico = osService.listarPorCliente(cliente.getIdcliente());
 
         return new LoginResponse(
-                cliente.getNome(),
+                cliente.getIdOs(),
                 cliente.getEquipamento(),
-                cliente.getMarca(),
+                cliente.getGarantia(),
                 cliente.getSituacao(),
                 cliente.getDataEntrada(),
                 ordensServico

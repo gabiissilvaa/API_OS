@@ -15,14 +15,17 @@ import java.util.Date;
 public class OSModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_os")
-    private Long id;
+    @Column(name = "id_os", nullable = false)
+    private Long idOs;
 
     @Column(name = "idcliente", nullable = false)
     private Long idcliente;
 
-    @Column(name = "modelo", nullable = false)
-    private String modelo;
+    @Column(name = "nomecliente", nullable = false)
+    private String nome;
+
+    @Column(name = "documentocliente", nullable = false)
+    private String cpfCnpj;
 
     @Column(name = "problema_relatado", nullable = false)
     private String problemaRelatado;
@@ -32,6 +35,21 @@ public class OSModel {
 
     @Column(name = "garantia", nullable = false)
     private String garantia;
+
+    @Column(name = "equipamento", nullable = false)
+    private String equipamento;
+
+    @Column(name = "marca", nullable = false)
+    private String marca;
+
+    @Column(name = "modelo", nullable = false)
+    private String modelo;
+
+    @Column(name = "ultSituacao", nullable = false)
+    private String situacao;
+
+    @Column(name = "dtEntrada", nullable = false)
+    private Date dataEntrada;
 
     @Column(name = "DATA_ULTIMA_SITUACAO")
     private Date dataUltSituacao;

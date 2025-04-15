@@ -14,27 +14,24 @@ import java.util.List;
 @Immutable
 @Table(name = "view_os_cliente_web")
 public class ClienteModel {
-    @Column(name = "nomecliente", nullable = false)
-    private String nome;
+    @Id
+    @Column(name = "id_os", nullable = false)
+    private Long idOs;
 
     @Column(name = "idcliente", nullable = false)
     private Long idcliente;
 
-    @Id
-    @Column(name = "documentocliente", nullable = false)
-    private String cpfCnpj;
-
     @Column(name = "equipamento", nullable = false)
     private String equipamento;
 
-    @Column(name = "marca", nullable = false)
-    private String marca;
+    @Column(name = "dtEntrada", nullable = false)
+    private Date dataEntrada;
+
+    @Column(name = "garantia", nullable = false)
+    private String garantia;
 
     @Column(name = "ultSituacao", nullable = false)
     private String situacao;
-
-    @Column(name = "dtEntrada", nullable = false)
-    private Date dataEntrada;
 
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     private List<OSModel> ordensServico;

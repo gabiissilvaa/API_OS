@@ -1,27 +1,29 @@
 package com.os.WebOS.dto;
 
+import com.os.WebOS.model.OSModel;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Getter
 @Setter
 public class LoginResponse {
-    private String nome;
+    private Long idOs;
     private String equipamento;
-    private String marca;
-    private String situacao;
     private Date dataEntrada;
-    private List<OSDto> ordensServicos;
+    private String garantia;
+    private String situacao;
+    private List<OSModel> ordensServico;
 
-    public LoginResponse(String nome, String equipamento, String marca, String situacao, Date dataEntrada, List<OSDto> ordensServicos) {
-        this.nome = nome;
+    public LoginResponse(Long idOs, String equipamento, String garantia, String situacao, Date dataEntrada, List<OSDto> ordensServico) {
+        this.idOs = idOs;
         this.equipamento = equipamento;
-        this.marca = marca;
-        this.situacao = situacao;
         this.dataEntrada = dataEntrada;
-        this.ordensServicos = ordensServicos;
+        this.garantia = garantia;
+        this.situacao = situacao;
+        this.ordensServico = new LinkedList<>();
     }
 }
