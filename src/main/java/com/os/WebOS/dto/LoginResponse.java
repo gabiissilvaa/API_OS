@@ -16,14 +16,16 @@ public class LoginResponse {
     private Date dataEntrada;
     private String garantia;
     private String situacao;
+    private String nome;
     private List<OSModel> ordensServico;
 
-    public LoginResponse(Long idOs, String equipamento, String garantia, String situacao, Date dataEntrada, List<OSDto> ordensServico) {
+    public LoginResponse(Long idOs, String equipamento, String garantia, String situacao, Date dataEntrada, String nome, List<OSDto> ordensServico) {
         this.idOs = idOs;
         this.equipamento = equipamento;
         this.dataEntrada = dataEntrada;
         this.garantia = garantia;
         this.situacao = situacao;
+        this.nome = nome;
         this.ordensServico = new LinkedList<>();
     }
 }

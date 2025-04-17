@@ -3,10 +3,8 @@ package com.os.WebOS.service;
 import com.os.WebOS.dto.AuthRequest;
 import com.os.WebOS.dto.LoginResponse;
 import com.os.WebOS.dto.OSDto;
-import com.os.WebOS.exception.CredenciaisInvalidasException;
 import com.os.WebOS.exception.UsuarioNaoEncontradoException;
 import com.os.WebOS.model.ClienteModel;
-import com.os.WebOS.model.SenhaModel;
 import com.os.WebOS.repository.ClienteRepository;
 import com.os.WebOS.repository.OSRepository;
 import com.os.WebOS.repository.SenhaRepository;
@@ -33,15 +31,14 @@ public class AuthService {
     }
 
     public LoginResponse autenticar(AuthRequest request) {
-        if (!validarCpfCnpj(request.getCpfCnpj())) {
-            throw new IllegalArgumentException("CPF/CNPJ inválido");
-        }
+        String cpfCnpj = request.getCpfCnpj();
+        String senha = request.getSenha();
 
-        SenhaModel dadosSenha = senhaRepository.findByCpfCnpj(request.getCpfCnpj())
-                .orElseThrow(() -> new UsuarioNaoEncontradoException("Credenciais inválidas"));
-
-        if (!request.getSenha().equals(dadosSenha.getSenhaAcessoOsWeb())) {
-            throw new CredenciaisInvalidasException("Senha incorreta");
+        if (!validarCpfCnpj(cpfCnpj)
+                || !senhaRepository.findByCpfCnpj(cpfCnpj)
+                .map(s -> senha.equals(s.getSenhaAcessoOsWeb()))
+                .orElse(false)) {
+            throw new IllegalArgumentException("Credenciais inválidas");
         }
 
         ClienteModel cliente = clienteRepository.findByCpfCnpj(request.getCpfCnpj())
@@ -58,6 +55,7 @@ public class AuthService {
                 cliente.getGarantia(),
                 cliente.getSituacao(),
                 cliente.getDataEntrada(),
+                cliente.getNome(),
                 ordensServico
         );
     }

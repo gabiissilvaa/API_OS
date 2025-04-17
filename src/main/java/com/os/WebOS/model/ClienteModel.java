@@ -18,9 +18,6 @@ public class ClienteModel {
     @Column(name = "id_os", nullable = false)
     private Long idOs;
 
-    @Column(name = "idcliente", nullable = false)
-    private Long idcliente;
-
     @Column(name = "equipamento", nullable = false)
     private String equipamento;
 
@@ -32,6 +29,16 @@ public class ClienteModel {
 
     @Column(name = "ultSituacao", nullable = false)
     private String situacao;
+
+    //Campos para busca
+    @Column(name = "documentoCliente", nullable = false)
+    private String cpfCnpj;
+
+    @Column(name = "idcliente", nullable = false)
+    private Long idcliente;
+
+    @Column(name = "nomeCliente", nullable = false)
+    private String nome;
 
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     private List<OSModel> ordensServico;
