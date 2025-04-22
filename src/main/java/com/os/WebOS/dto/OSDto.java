@@ -1,5 +1,6 @@
 package com.os.WebOS.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +20,9 @@ public class OSDto {
     private String marca;
     private String modelo;
     private String situacao;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "America/Sao_Paulo")
     private Date dataEntrada;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "America/Sao_Paulo")
     private Date dataUltSituacao;
 
     public OSDto(Long idOs, Long idcliente, String nome, String cpfCnpj, String problemaRelatado, String tecnico, String garantia, String equipamento, String marca, String modelo, String situacao, Date dataEntrada, Date dataUltSituacao) {
