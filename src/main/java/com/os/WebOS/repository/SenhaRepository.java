@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface SenhaRepository extends JpaRepository<SenhaModel, Long> {
     Optional<SenhaModel> findByCpfCnpj(String cpfCnpj);
+    Optional<SenhaModel> findByCpfCnpjAndSenhaAcessoOsWeb(String cpfCnpj,String senha);
 }

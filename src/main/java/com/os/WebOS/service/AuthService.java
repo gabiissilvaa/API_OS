@@ -1,28 +1,16 @@
 package com.os.WebOS.service;
 
 import com.os.WebOS.dto.AuthRequest;
-import com.os.WebOS.dto.LoginResponse;
-import com.os.WebOS.dto.OSDto;
-import com.os.WebOS.exception.UsuarioNaoEncontradoException;
-import com.os.WebOS.model.ClienteModel;
-import com.os.WebOS.repository.ClienteRepository;
-import com.os.WebOS.repository.OSRepository;
+import com.os.WebOS.model.SenhaModel;
 import com.os.WebOS.repository.SenhaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthService {
-    @Autowired
-    private ClienteRepository clienteRepository;
-
-    @Autowired
-    private OSRepository osRepository;
-
-    @Autowired
-    private OSService osService;
-
     @Autowired
     private SenhaRepository senhaRepository;
 
@@ -30,33 +18,20 @@ public class AuthService {
         return documento != null && !documento.trim().isEmpty();
     }
 
-    public LoginResponse autenticar(AuthRequest request) {
+    public ResponseEntity<SenhaModel> autenticar(AuthRequest request) {
         String cpfCnpj = request.getCpfCnpj();
         String senha = request.getSenha();
 
-        if (!validarCpfCnpj(cpfCnpj)
-                || !senhaRepository.findByCpfCnpj(cpfCnpj)
-                .map(s -> senha.equals(s.getSenhaAcessoOsWeb()))
-                .orElse(false)) {
+        if (!validarCpfCnpj(cpfCnpj)) {
             throw new IllegalArgumentException("Credenciais inválidas");
         }
 
-        ClienteModel cliente = clienteRepository.findByCpfCnpj(request.getCpfCnpj())
-                .orElseThrow(() -> {
-                    System.out.println("Cliente não encontrado com CPF/CNPJ: " + request.getCpfCnpj());
-                    return new UsuarioNaoEncontradoException("Nenhuma OS encontrada");
-                });
+        Optional<SenhaModel> s = senhaRepository.findByCpfCnpjAndSenhaAcessoOsWeb(cpfCnpj, senha);
 
-        List<OSDto> ordensServico = osService.listarPorCliente(cliente.getIdcliente());
-
-        return new LoginResponse(
-                cliente.getIdOs(),
-                cliente.getEquipamento(),
-                cliente.getGarantia(),
-                cliente.getSituacao(),
-                cliente.getDataEntrada(),
-                cliente.getNome(),
-                ordensServico
-        );
+        if (s.isPresent()){
+            return ResponseEntity.ok(s.get());
+    }
+        return s.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 }
